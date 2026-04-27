@@ -1,37 +1,25 @@
 declare global {
-    interface BiliCommentsElement extends HTMLElement {
+    // 基础接口：强制包含 shadowRoot 且继承 HTMLElement
+    interface BiliCustomElement extends HTMLElement {
         readonly shadowRoot: ShadowRoot;
     }
 
-    interface BiliCommentThreadRendererElement extends HTMLElement {
-        readonly shadowRoot: ShadowRoot;
+    interface BiliCommentsElement extends BiliCustomElement { }
+
+    interface BiliCommentThreadRendererElement extends BiliCustomElement {
+        // 激进重构版用到了 data-processed，这里显式声明可以增加代码可读性
+        dataset: DOMStringMap & { processed?: string };
     }
 
-    interface BiliCommentRendererElement extends HTMLElement {
-        readonly shadowRoot: ShadowRoot;
-    }
+    interface BiliCommentRendererElement extends BiliCustomElement { }
 
-    interface BiliCommentUserInfoElement extends HTMLElement {
-        readonly shadowRoot: ShadowRoot;
-    }
-
-    interface BiliCommentRepliesRendererElement extends HTMLElement {
-        readonly shadowRoot: ShadowRoot;
-    }
-
-    interface BiliCommentReplyRendererElement extends HTMLElement {
-        readonly shadowRoot: ShadowRoot;
-    }
-
+    // 关键：扩展原生标签映射，这样 querySelectorAll("bili-comments") 会直接返回 NodeListOf<BiliCommentsElement>
     interface HTMLElementTagNameMap {
         "bili-comments": BiliCommentsElement;
         "bili-comment-thread-renderer": BiliCommentThreadRendererElement;
-        "bili-comment-renderer": BiliCommentRendererElement;
-        "bili-comment-user-info": BiliCommentUserInfoElement;
         "bili-comment-replies-renderer": BiliCommentRepliesRendererElement;
-        "bili-comment-reply-renderer": BiliCommentReplyRendererElement;
     }
-
+}
     interface Window {
         __INITIAL_STATE__?: {
             detail?: {
@@ -46,6 +34,6 @@ declare global {
             };
         };
     }
-}
+
 
 export {};

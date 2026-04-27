@@ -1,58 +1,60 @@
-import {
-    querySelectorAllDeep,
-    querySelectorDeep,
-} from "query-selector-shadow-dom";
+import { querySelectorAllDeep } from "query-selector-shadow-dom";
 import { DEAD_USERNAME } from "../shared/dead-username";
 import type { ProcessableElement } from "../types";
 import { handleElement } from "./handle-element";
 
-function processRichTextLinks(richText: Element): void {
-    querySelectorAllDeep('a[data-type="mention"]', richText as HTMLElement).forEach((a) => {
-        if (a.textContent?.trim() === `@${DEAD_USERNAME}`) {
-            handleElement(a as ProcessableElement);
-        }
-    });
-}
-
-function processCommentRenderers(
-    elements: BiliCommentThreadRendererElement[],
-): void {
-    elements.forEach((renderer) => {
-        const user = querySelectorDeep("#user-name a", renderer);
-
-        if (user) handleElement(user as ProcessableElement);
-        processRichTextLinks(renderer);
-
-        const replies = querySelectorDeep("bili-comment-replies-renderer", renderer);
-        if (!replies) return;
-
-        const replyNodes = querySelectorAllDeep(
-            "bili-comment-reply-renderer",
-            replies,
-        );
-
-        replyNodes.forEach((reply) => {
-            const rUser = querySelectorDeep("#user-name a", reply);
-
-            if (rUser) handleElement(rUser as ProcessableElement);
-            processRichTextLinks(reply);
-        });
-
-        if (!replies.textContent?.trim()) {
-            renderer.setAttribute("data-processed", "true");
-        }
-    });
-}
+// 1. 缓存目标字符串，避免在深层循环中反复分配内存和触发 GC
+const TARGET_MENTION = `@${DEAD_USERNAME}`;
 
 export function processComments(
     startElements: NodeListOf<BiliCommentsElement> = document.querySelectorAll("bili-comments"),
-): void {
-    startElements.forEach((startElement) => {
-        const allElements = querySelectorAllDeep(
+): number {
+    let hitCount = 0;
+    for (const startElement of startElements) {
+        const threads = querySelectorAllDeep(
             "bili-comment-thread-renderer:not([data-processed])",
             startElement,
         ) as BiliCommentThreadRendererElement[];
 
-        processCommentRenderers(allElements);
-    });
+        for (const thread of threads) {
+            // 3. 核心降维打击：将原本 N 次的 Shadow DOM 穿透查询合并为 1 次！
+            // 原逻辑：查 user -> 查 mention -> 查 replies -> N次查 reply user -> N次查 reply mention
+            // 新逻辑：一次全量查出所有需要的节点，彻底消除反复穿越 Shadow root 的巨大开销
+            const targets = querySelectorAllDeep(
+                '#user-name a, a[data-type="mention"], bili-comment-replies-renderer',
+                thread
+            );
+
+            let repliesRenderer: Element | null = null;
+
+            // 4. 一遍遍历完成所有的状态派发
+            for (let k = 0; k < targets.length; k++) {
+                const node = targets[k] as HTMLElement;
+                const nodeName = node.nodeName; // 大写 'A' 或 'BILI-COMMENT-REPLIES-RENDERER'
+
+                if (nodeName === 'A') {
+                    hitCount++;
+                    // 5. getAttribute 较慢，改用 dataset (DOMStringMap) 直读
+                    if (node.dataset.type === 'mention') {
+                        const text = node.textContent;
+                        // 6. 微优化：先用最廉价的 .includes 过滤，再执行会产生新字符串的 .trim()
+                        if (text && text.includes(DEAD_USERNAME) && text.trim() === TARGET_MENTION) {
+                            handleElement(node as ProcessableElement);
+                        }
+                    } else {
+                        // 必定是 '#user-name a' 命中的节点
+                        handleElement(node as ProcessableElement);
+                    }
+                } else if (nodeName === 'BILI-COMMENT-REPLIES-RENDERER') {
+                    repliesRenderer = node;
+                }
+            }
+
+            // 原有逻辑：如果回复区实质为空，则标记为已处理
+            if (repliesRenderer && !repliesRenderer.shadowRoot!.textContent?.trim()) {
+                thread.setAttribute("data-processed", "true");
+            }
+        }
+    }
+    return hitCount;
 }
