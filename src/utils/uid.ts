@@ -1,5 +1,5 @@
 import type { ProcessableElement, RuleUidGetter } from "../types";
-import { REG_TIME_RANGES, SHORT_ID_CHARS } from "../constants";
+import { REG_TIME_RANGES, SHORT_ID_CHARS } from "../shared/uid-data";
 
 export function uidToShortId(n: string | number | bigint): string {
     let value = BigInt(n);

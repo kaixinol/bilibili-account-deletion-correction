@@ -3,6 +3,13 @@ import monkey, { cdn } from "vite-plugin-monkey";
 import { fileURLToPath, URL } from "node:url";
 
 export default defineConfig({
+    build: {
+        minify: "terser",
+        terserOptions: {
+            compress: true,
+            mangle: false,
+        },
+    },
     plugins: [
         monkey({
             entry: "src/main.ts",
@@ -23,8 +30,8 @@ export default defineConfig({
                         "dist/querySelectorShadowDom.js",
                     ),
                 },
-            }
-        })
+            },
+        }),
     ],
     resolve: {
         alias: {
@@ -32,5 +39,3 @@ export default defineConfig({
         },
     }
 });
-
-

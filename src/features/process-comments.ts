@@ -1,4 +1,4 @@
-import { DEAD_USERNAME } from "../constants";
+import { DEAD_USERNAME } from "../shared/dead-username";
 import type { ProcessableElement } from "../types";
 import { handleElement } from "./handle-element";
 
@@ -38,7 +38,7 @@ function processCommentRenderers(
 
         if (!replies) return;
 
-        const replyNodes = replies.querySelectorAll(
+        const replyNodes = replies.querySelectorAll<BiliCommentReplyRendererElement>(
             "bili-comment-reply-renderer",
         );
 
@@ -63,9 +63,7 @@ function processCommentRenderers(
 }
 
 export function processComments(
-    startElements: NodeListOf<BiliCommentsElement> = document
-        .querySelector("#app")!
-        .querySelectorAll("bili-comments"),
+    startElements: NodeListOf<BiliCommentsElement> = document.querySelectorAll("bili-comments"),
 ): void {
     startElements.forEach((startElement) => {
         const root = startElement.shadowRoot;

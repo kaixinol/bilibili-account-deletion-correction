@@ -156,9 +156,7 @@ export const handleOverrideProcessElement: ElementHandleFunc = (
     const text = textGetter(tag);
     const str = text.trim();
 
-    if (!isDeadUsername(str)) {
-        return;
-    }
+    if (!isDeadUsername(str)) return;
 
     tag.style.fontStyle = "italic";
 
@@ -179,9 +177,7 @@ export function handleElement(
     const text = textGetter(tag);
     const str = text.trim();
 
-    if (!isDeadUsername(str)) {
-        return;
-    }
+    if (!isDeadUsername(str)) return;
 
     tag.style.fontStyle = "italic";
 

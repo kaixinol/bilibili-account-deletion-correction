@@ -1,28 +1,28 @@
-interface BiliCommentsElement extends HTMLElement {
-    readonly shadowRoot: ShadowRoot;
-}
-
-interface BiliCommentThreadRendererElement extends HTMLElement {
-    readonly shadowRoot: ShadowRoot;
-}
-
-interface BiliCommentRendererElement extends HTMLElement {
-    readonly shadowRoot: ShadowRoot;
-}
-
-interface BiliCommentUserInfoElement extends HTMLElement {
-    readonly shadowRoot: ShadowRoot;
-}
-
-interface BiliCommentRepliesRendererElement extends HTMLElement {
-    readonly shadowRoot: ShadowRoot;
-}
-
-interface BiliCommentReplyRendererElement extends HTMLElement {
-    readonly shadowRoot: ShadowRoot;
-}
-
 declare global {
+    interface BiliCommentsElement extends HTMLElement {
+        readonly shadowRoot: ShadowRoot;
+    }
+
+    interface BiliCommentThreadRendererElement extends HTMLElement {
+        readonly shadowRoot: ShadowRoot;
+    }
+
+    interface BiliCommentRendererElement extends HTMLElement {
+        readonly shadowRoot: ShadowRoot;
+    }
+
+    interface BiliCommentUserInfoElement extends HTMLElement {
+        readonly shadowRoot: ShadowRoot;
+    }
+
+    interface BiliCommentRepliesRendererElement extends HTMLElement {
+        readonly shadowRoot: ShadowRoot;
+    }
+
+    interface BiliCommentReplyRendererElement extends HTMLElement {
+        readonly shadowRoot: ShadowRoot;
+    }
+
     interface HTMLElementTagNameMap {
         "bili-comments": BiliCommentsElement;
         "bili-comment-thread-renderer": BiliCommentThreadRendererElement;

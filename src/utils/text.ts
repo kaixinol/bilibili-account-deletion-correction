@@ -1,4 +1,4 @@
-import { DEAD_USERNAME } from "../constants";
+import { DEAD_USERNAME } from "../shared/dead-username";
 import type { ElementTextGetter, ProcessableElement } from "../types";
 
 export function getLegacyText(el: ProcessableElement): string {
