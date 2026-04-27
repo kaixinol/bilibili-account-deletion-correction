@@ -1,15 +1,13 @@
+import {
+    querySelectorAllDeep,
+    querySelectorDeep,
+} from "query-selector-shadow-dom";
 import { DEAD_USERNAME } from "../shared/dead-username";
 import type { ProcessableElement } from "../types";
 import { handleElement } from "./handle-element";
 
 function processRichTextLinks(richText: Element): void {
-    const root = richText.shadowRoot;
-    if (!root) return;
-
-    const inner = root.querySelector("bili-rich-text")?.shadowRoot;
-    if (!inner) return;
-
-    inner.querySelectorAll('a[data-type="mention"]').forEach((a) => {
+    querySelectorAllDeep('a[data-type="mention"]', richText as HTMLElement).forEach((a) => {
         if (a.textContent?.trim() === `@${DEAD_USERNAME}`) {
             handleElement(a as ProcessableElement);
         }
@@ -17,43 +15,27 @@ function processRichTextLinks(richText: Element): void {
 }
 
 function processCommentRenderers(
-    elements: NodeListOf<BiliCommentThreadRendererElement>,
+    elements: BiliCommentThreadRendererElement[],
 ): void {
     elements.forEach((renderer) => {
-        const rendererRoot = renderer.shadowRoot;
-
-        const bili = rendererRoot.querySelector("bili-comment-renderer")?.shadowRoot;
-        if (!bili) return;
-
-        const userInfo = bili.querySelector("bili-comment-user-info")?.shadowRoot;
-        const user = userInfo?.querySelector("#user-name a");
+        const user = querySelectorDeep("#user-name a", renderer);
 
         if (user) handleElement(user as ProcessableElement);
+        processRichTextLinks(renderer);
 
-        processRichTextLinks(bili.host);
-
-        const replies = rendererRoot.querySelector(
-            "bili-comment-replies-renderer",
-        )?.shadowRoot;
-
+        const replies = querySelectorDeep("bili-comment-replies-renderer", renderer);
         if (!replies) return;
 
-        const replyNodes = replies.querySelectorAll<BiliCommentReplyRendererElement>(
+        const replyNodes = querySelectorAllDeep(
             "bili-comment-reply-renderer",
+            replies,
         );
 
         replyNodes.forEach((reply) => {
-            const replyRoot = reply.shadowRoot;
-
-            const rUserInfo = replyRoot.querySelector(
-                "bili-comment-user-info",
-            )?.shadowRoot;
-
-            const rUser = rUserInfo?.querySelector("#user-name a");
+            const rUser = querySelectorDeep("#user-name a", reply);
 
             if (rUser) handleElement(rUser as ProcessableElement);
-
-            processRichTextLinks(replyRoot.host);
+            processRichTextLinks(reply);
         });
 
         if (!replies.textContent?.trim()) {
@@ -66,11 +48,10 @@ export function processComments(
     startElements: NodeListOf<BiliCommentsElement> = document.querySelectorAll("bili-comments"),
 ): void {
     startElements.forEach((startElement) => {
-        const root = startElement.shadowRoot;
-
-        const allElements = root.querySelectorAll<BiliCommentThreadRendererElement>(
+        const allElements = querySelectorAllDeep(
             "bili-comment-thread-renderer:not([data-processed])",
-        );
+            startElement,
+        ) as BiliCommentThreadRendererElement[];
 
         processCommentRenderers(allElements);
     });
