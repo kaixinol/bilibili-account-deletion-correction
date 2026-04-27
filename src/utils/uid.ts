@@ -26,7 +26,7 @@ export function estimateRegisterTime(uid: string | number | bigint): string {
         return "≈ 2020-10-29 之后（10位UID时代）";
     }
 
-    for (const { min, max, date } of REG_TIME_RANGES) {
+    for (const [min, max, date] of REG_TIME_RANGES) {
         if (n >= min && n <= max) {
             return date;
         }

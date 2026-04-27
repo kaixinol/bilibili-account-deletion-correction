@@ -6,14 +6,25 @@ export default defineConfig({
     build: {
         minify: "terser",
         terserOptions: {
-            compress: true,
+            compress: {
+                hoist_funs: true,
+                hoist_vars: false,
+                passes: 2,
+                pure_getters: true,
+                toplevel: true,
+                unsafe_arrows: true,
+            },
             mangle: false,
+            format: {
+                comments: false,
+            },
         },
     },
     plugins: [
         monkey({
             entry: "src/main.ts",
             userscript: {
+                name: "Bilibili 账号已注销修正",
                 namespace: "http://tampermonkey.net/",
                 license: "MIT",
                 description: "修正Bilibili 账户已注销的主页链接，修改为 https://www.bilibili.com/list/$UID",

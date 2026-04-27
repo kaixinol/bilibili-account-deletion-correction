@@ -21,8 +21,4 @@ export interface RuleConfig {
     uidGetter?: RuleUidGetter;
 }
 
-export interface RangeRule {
-    min: bigint;
-    max: bigint;
-    date: string;
-}
+export type RangeRule = [min: bigint, max: bigint, date: string];
