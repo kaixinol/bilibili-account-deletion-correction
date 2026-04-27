@@ -1,0 +1,31 @@
+{
+    "compilerOptions": {
+        /* 基础 */
+        "target": "ES2020",
+        "module": "ESNext",
+        "moduleResolution": "Bundler",
+
+        /* 类型 */
+        "strict": true,
+        "noUncheckedIndexedAccess": true,
+        "exactOptionalPropertyTypes": true,
+
+        /* DOM（关键） */
+        "lib": ["ES2020", "DOM", "DOM.Iterable"],
+
+        /* 构建相关 */
+        "isolatedModules": true,
+        "noEmit": true,
+
+        /* 兼容 Vite */
+        "skipLibCheck": true,
+        "useDefineForClassFields": true,
+
+        /* 路径（可选） */
+        "paths": {
+            "@/*": ["./src/*"]
+        }
+    },
+
+    "include": ["src"]
+}
