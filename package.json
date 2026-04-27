@@ -1,6 +1,6 @@
 {
   "name": "bilibili-account-deletion-correction",
-  "version": "3.0.0b2",
+  "version": "3.0.0b3",
   "description": "",
   "main": "src/main.ts",
   "scripts": {

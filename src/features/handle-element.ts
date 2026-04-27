@@ -81,6 +81,7 @@ function annotateElement(
     appendShortId(tag, matchText, uidToShortId(uid));
     applyOverflowFallback(tag);
     attachRegisterTime(tag, estimateRegisterTime(uid));
+    processNormalElement(tag, uid);
 }
 
 function annotateElementsWithMatchText(
@@ -183,7 +184,6 @@ export function handleElement(
 
     const uid = uidGetter(tag);
     if (!uid) return;
-
     annotateElementsWithMatchText([tag], str, uidGetter);
-    processNormalElement(tag, uid);
+
 }
