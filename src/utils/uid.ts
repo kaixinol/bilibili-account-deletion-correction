@@ -1,4 +1,4 @@
-import type { ProcessableElement, RuleUidGetter } from "../types";
+import type {  RuleUidGetter } from "../types";
 import { REG_TIME_RANGES, SHORT_ID_CHARS } from "../shared/uid-data";
 
 export function uidToShortId(n: string | number | bigint): string {
@@ -35,7 +35,7 @@ export function estimateRegisterTime(uid: string | number | bigint): string {
     return "未知时间";
 }
 
-export const getHrefUid: RuleUidGetter = (tag: ProcessableElement) => {
+export const getHrefUid: RuleUidGetter = (tag: HTMLAnchorElement) => {
     const uidMatch = tag.href?.match(/\/(\d+)\??/) ?? null;
     return uidMatch?.[1];
 };

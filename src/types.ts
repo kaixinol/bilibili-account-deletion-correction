@@ -1,19 +1,14 @@
-export interface ProcessableElement extends HTMLElement {
-    href?: string;
-    text?: string;
-}
-
 export type UidValue = string | number | bigint;
-export type ElementTextGetter = (tag: ProcessableElement) => string;
+export type ElementTextGetter = (tag: HTMLAnchorElement) => string;
 export type RuleUidGetter = (
-    tag: ProcessableElement,
+    tag: HTMLAnchorElement,
 ) => UidValue | undefined;
 export type ElementHandleFunc = (
-    tag: ProcessableElement,
+    tag: HTMLAnchorElement,
     textGetter?: ElementTextGetter,
     uidGetter?: RuleUidGetter,
 ) => void;
-
+HTMLAnchorElement
 export interface RuleConfig {
     query: string | string[];
     handleFunc?: ElementHandleFunc;

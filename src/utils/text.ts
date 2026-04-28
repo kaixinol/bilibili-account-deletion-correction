@@ -1,11 +1,11 @@
 import { DEAD_USERNAME } from "../shared/dead-username";
-import type { ElementTextGetter, ProcessableElement } from "../types";
+import type { ElementTextGetter } from "../types";
 
-export function getLegacyText(el: ProcessableElement): string {
+export function getLegacyText(el: HTMLAnchorElement): string {
     return (el.text ?? el.textContent ?? "").toString();
 }
 
-export function setLegacyText(el: ProcessableElement, value: string): void {
+export function setLegacyText(el: HTMLAnchorElement, value: string): void {
     el.text = value;
     el.textContent = value;
 }

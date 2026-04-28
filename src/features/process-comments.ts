@@ -1,6 +1,5 @@
 import { querySelectorAllDeep } from "query-selector-shadow-dom";
 import { DEAD_USERNAME } from "../shared/dead-username";
-import type { ProcessableElement } from "../types";
 import { handleElement } from "./handle-element";
 
 // 1. 缓存目标字符串，避免在深层循环中反复分配内存和触发 GC
@@ -39,11 +38,11 @@ export function processComments(
                         const text = node.textContent;
                         // 6. 微优化：先用最廉价的 .includes 过滤，再执行会产生新字符串的 .trim()
                         if (text && text.includes(DEAD_USERNAME) && text.trim() === TARGET_MENTION) {
-                            handleElement(node as ProcessableElement);
+                            handleElement(node as HTMLAnchorElement);
                         }
                     } else {
                         // 必定是 '#user-name a' 命中的节点
-                        handleElement(node as ProcessableElement);
+                        handleElement(node as HTMLAnchorElement);
                     }
                 } else if (nodeName === 'BILI-COMMENT-REPLIES-RENDERER') {
                     repliesRenderer = node;

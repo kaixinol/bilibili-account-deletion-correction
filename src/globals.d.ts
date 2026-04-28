@@ -19,7 +19,6 @@ declare global {
         "bili-comment-thread-renderer": BiliCommentThreadRendererElement;
         "bili-comment-replies-renderer": BiliCommentRepliesRendererElement;
     }
-}
     interface Window {
         __INITIAL_STATE__?: {
             detail?: {
@@ -35,5 +34,5 @@ declare global {
         };
     }
 
-
+}
 export {};

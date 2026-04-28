@@ -1,5 +1,4 @@
 import { LINK_RULES } from "../constants";
-import type { ProcessableElement } from "../types";
 import { handleElement } from "./handle-element";
 
 export function processLinks(): void {
@@ -11,7 +10,7 @@ export function processLinks(): void {
         for (const q of queries) {
             document.querySelectorAll(q).forEach((el) => {
                 handleElement(
-                    el as ProcessableElement,
+                    el as HTMLAnchorElement,
                     handleFunc,
                     textGetter,
                     uidGetter,

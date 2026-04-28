@@ -2,7 +2,6 @@ import { makeLinkPreview } from "./link-preview";
 import type {
     ElementHandleFunc,
     ElementTextGetter,
-    ProcessableElement,
     RuleUidGetter,
     UidValue,
 } from "../types";
@@ -19,7 +18,7 @@ import {
 } from "../utils/uid";
 
 function appendShortId(
-    tag: ProcessableElement,
+    tag: HTMLAnchorElement,
     matchText: string,
     shortId: string,
 ): void {
@@ -33,7 +32,7 @@ function appendShortId(
     setLegacyText(tag, originalText.trim() + shortId);
 }
 
-function applyOverflowFallback(tag: ProcessableElement): void {
+function applyOverflowFallback(tag: HTMLAnchorElement): void {
     if (tag.scrollWidth <= tag.clientWidth && tag.scrollHeight <= tag.clientHeight) {
         return;
     }
@@ -48,7 +47,7 @@ function applyOverflowFallback(tag: ProcessableElement): void {
     }
 }
 
-function attachRegisterTime(tag: ProcessableElement, time: string): void {
+function attachRegisterTime(tag: HTMLAnchorElement, time: string): void {
     const datasetTag = tag as HTMLElement & {
         dataset: DOMStringMap;
     };
@@ -64,14 +63,14 @@ function attachRegisterTime(tag: ProcessableElement, time: string): void {
     datasetTag.dataset.regTimeAdded = "1";
 }
 
-export function annotateElements(elements: Iterable<ProcessableElement>): void {
+export function annotateElements(elements: Iterable<HTMLAnchorElement>): void {
     for (const tag of elements) {
         annotateElement(tag);
     }
 }
 
 function annotateElement(
-    tag: ProcessableElement,
+    tag: HTMLAnchorElement,
     matchText = getLegacyText(tag).trim(),
     uidGetter: RuleUidGetter = getHrefUid,
 ): void {
@@ -85,7 +84,7 @@ function annotateElement(
 }
 
 function annotateElementsWithMatchText(
-    elements: Iterable<ProcessableElement>,
+    elements: Iterable<HTMLAnchorElement>,
     matchText: string,
     uidGetter: RuleUidGetter = getHrefUid,
 ): void {
@@ -95,7 +94,7 @@ function annotateElementsWithMatchText(
 }
 
 function handleOverrideElement(
-    tag: ProcessableElement,
+    tag: HTMLAnchorElement,
     displayText: string,
     uidGetter: RuleUidGetter = getHrefUid,
 ): void {
@@ -127,7 +126,7 @@ function handleOverrideElement(
     tag.setAttribute("data-processed", "true");
 }
 
-function processNormalElement(tag: ProcessableElement, uid: UidValue): void {
+function processNormalElement(tag: HTMLAnchorElement, uid: UidValue): void {
     tag.href = `https://www.bilibili.com/list/${uid}`;
 }
 
@@ -165,7 +164,7 @@ export const handleOverrideProcessElement: ElementHandleFunc = (
 };
 
 export function handleElement(
-    tag: ProcessableElement,
+    tag: HTMLAnchorElement,
     handleFunc?: ElementHandleFunc,
     textGetter: ElementTextGetter = getDefaultMatchText,
     uidGetter: RuleUidGetter = getHrefUid,
