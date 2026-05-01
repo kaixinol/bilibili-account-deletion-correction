@@ -20,7 +20,7 @@ export function processComments(
             // 原逻辑：查 user -> 查 mention -> 查 replies -> N次查 reply user -> N次查 reply mention
             // 新逻辑：一次全量查出所有需要的节点，彻底消除反复穿越 Shadow root 的巨大开销
             const targets = querySelectorAllDeep(
-                '#user-name a, a[data-type="mention"], bili-comment-replies-renderer',
+                '#user-name a, a[data-type="mention"], bili-comment-replies-renderer, a#user-avatar',
                 thread
             );
 
