@@ -7,8 +7,8 @@ declare global {
     interface BiliCommentsElement extends BiliCustomElement { }
 
     interface BiliCommentThreadRendererElement extends BiliCustomElement {
-        // 激进重构版用到了 data-processed，这里显式声明可以增加代码可读性
-        dataset: DOMStringMap & { processed?: string };
+        // 激进重构版用到了 data-bilifix-processed，这里显式声明可以增加代码可读性
+        dataset: DOMStringMap & { bilifixProcessed?: string };
     }
 
     interface BiliCommentRendererElement extends BiliCustomElement { }

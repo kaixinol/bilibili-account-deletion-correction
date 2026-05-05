@@ -11,7 +11,7 @@ export function processComments(
     let hitCount = 0;
     for (const startElement of startElements) {
         const threads = querySelectorAllDeep(
-            "bili-comment-thread-renderer:not([data-processed])",
+            "bili-comment-thread-renderer:not([data-bilifix-processed])",
             startElement,
         ) as BiliCommentThreadRendererElement[];
 
@@ -51,7 +51,7 @@ export function processComments(
 
             // 原有逻辑：如果回复区实质为空，则标记为已处理
             if (repliesRenderer && !repliesRenderer.shadowRoot!.textContent?.trim()) {
-                thread.setAttribute("data-processed", "true");
+                thread.setAttribute("data-bilifix-processed", "true");
             }
         }
     }

@@ -48,19 +48,13 @@ function applyOverflowFallback(tag: HTMLAnchorElement): void {
 }
 
 function attachRegisterTime(tag: HTMLAnchorElement, time: string): void {
-    const datasetTag = tag as HTMLElement & {
-        dataset: DOMStringMap;
-    };
-
-    if (datasetTag.dataset.regTimeAdded) {
+    if (tag.title.includes("注册时间推测")) {
         return;
     }
 
-    tag.setAttribute("data-reg-time", time);
     tag.title = tag.title
         ? `${tag.title}\n注册时间推测: ${time}`
         : `注册时间推测: ${time}`;
-    datasetTag.dataset.regTimeAdded = "1";
 }
 
 export function annotateElements(elements: Iterable<HTMLAnchorElement>): void {
@@ -123,18 +117,24 @@ function handleOverrideElement(
         nameEl.textContent = newText;
     }
 
-    tag.setAttribute("data-processed", "true");
+    tag.setAttribute("data-bilifix-processed", "true");
 }
 
 function processNormalElement(tag: HTMLAnchorElement, uid: UidValue): void {
     tag.href = `https://www.bilibili.com/list/${uid}`;
 }
 
+/**
+ * 处理视频/列表页面的"账号已注销"用户链接
+ * 使用代理元素拦截点击，而非直接修改 href（避免被 B 站重置）
+ * 效果：点击"账号已注销"文本会打开 https://www.bilibili.com/list/{uid}
+ */
 export const handleInterceptElement: ElementHandleFunc = (
     tag,
     textGetter = getDefaultMatchText,
     uidGetter = getHrefUid,
 ) => {
+    tag.classList.remove("up-name"); // 不暂时删除很快会被B站改回原名
     const text = textGetter(tag);
     const str = text.trim();
     if (!isDeadUsername(str)) return;
@@ -143,9 +143,10 @@ export const handleInterceptElement: ElementHandleFunc = (
 
     const uid = uidGetter(tag);
     if (!uid) return;
-
     annotateElementsWithMatchText([tag], str, uidGetter);
     makeLinkPreview(tag, `https://www.bilibili.com/list/${uid}`);
+    tag.classList.add("up-name");
+
 };
 
 export const handleOverrideProcessElement: ElementHandleFunc = (

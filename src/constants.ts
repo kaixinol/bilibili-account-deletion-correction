@@ -26,7 +26,7 @@ export const LINK_RULES: Record<string, RuleConfig> = {
     },
     "www.bilibili.com/opus/\\d+": {
         handleFunc: handleOverrideProcessElement,
-        query: ".opus-module-author:not([data-processed])",
+        query: ".opus-module-author:not([data-bilifix-processed])",
         textGetter: getFirstSegmentMatchText,
         uidGetter: getOpusStateUid,
     },

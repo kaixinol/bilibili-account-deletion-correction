@@ -1,6 +1,11 @@
+/**
+ * 创建点击代理元素
+ * 不直接修改 href 是为了避免被 B 站脚本检测并重置
+ * 通过覆盖点击事件跳转到目标 URL
+ */
 export function makeLinkPreview(el: HTMLElement, url: string): void {
-    if (el.dataset.linkPreview === "1") return;
-    el.dataset.linkPreview = "1";
+    if (el.dataset.bilifixProcessed) return;
+    el.dataset.bilifixProcessed = "1";
 
     // 直接暴力设置，不读取。写入属性虽然也可能触发重绘，但比先读后写（Reflow）快得多
     el.style.position = "relative";
