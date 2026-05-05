@@ -48,10 +48,6 @@ function applyOverflowFallback(tag: HTMLAnchorElement): void {
 }
 
 function attachRegisterTime(tag: HTMLAnchorElement, time: string): void {
-    if (tag.title.includes("注册时间推测")) {
-        return;
-    }
-
     tag.title = tag.title
         ? `${tag.title}\n注册时间推测: ${time}`
         : `注册时间推测: ${time}`;
