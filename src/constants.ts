@@ -19,6 +19,7 @@ export const LINK_RULES: Record<string, RuleConfig> = {
             "a.staff-name",
             "div.basic-desc-info a.mention-user",
         ],
+        requirePolling: true,
     },
     "search.bilibili.com": {
         query: ".bili-video-card__info--owner",

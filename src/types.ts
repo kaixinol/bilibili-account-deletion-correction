@@ -14,6 +14,7 @@ export interface RuleConfig {
     handleFunc?: ElementHandleFunc;
     textGetter?: ElementTextGetter;
     uidGetter?: RuleUidGetter;
+    requirePolling?: boolean;
 }
 
 export type RangeRule = [min: bigint, max: bigint, date: string];

@@ -1,8 +1,11 @@
 import { LINK_RULES } from "../constants";
 import { handleElement } from "./handle-element";
 
-export function processLinks(): void {
-    for (const [host, { query, handleFunc, textGetter, uidGetter }] of Object.entries(LINK_RULES)) {
+export function processLinks(isPolling = false): void {
+    for (const [host, { query, handleFunc, textGetter, uidGetter, requirePolling }] of Object.entries(LINK_RULES)) {
+        if (isPolling && !requirePolling) {
+            continue;
+        }
         if (!RegExp(host).test(location.href)) continue;
 
         const queries = Array.isArray(query) ? query : [query];

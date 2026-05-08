@@ -48,9 +48,10 @@ function applyOverflowFallback(tag: HTMLAnchorElement): void {
 }
 
 function attachRegisterTime(tag: HTMLAnchorElement, time: string): void {
-    tag.title = tag.title
-        ? `${tag.title}\n注册时间推测: ${time}`
-        : `注册时间推测: ${time}`;
+    if (!tag.title.includes("注册时间推测"))
+        tag.title = tag.title
+            ? `${tag.title}\n注册时间推测: ${time}`
+            : `注册时间推测: ${time}`;
 }
 
 export function annotateElements(elements: Iterable<HTMLAnchorElement>): void {
@@ -130,7 +131,6 @@ export const handleInterceptElement: ElementHandleFunc = (
     textGetter = getDefaultMatchText,
     uidGetter = getHrefUid,
 ) => {
-    tag.classList.remove("up-name"); // 不暂时删除很快会被B站改回原名
     const text = textGetter(tag);
     const str = text.trim();
     if (!isDeadUsername(str)) return;
@@ -141,7 +141,6 @@ export const handleInterceptElement: ElementHandleFunc = (
     if (!uid) return;
     annotateElementsWithMatchText([tag], str, uidGetter);
     makeLinkPreview(tag, `https://www.bilibili.com/list/${uid}`);
-    tag.classList.add("up-name");
 
 };
 
