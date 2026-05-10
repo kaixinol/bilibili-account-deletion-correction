@@ -1,6 +1,6 @@
 {
   "name": "bilibili-account-deletion-correction",
-  "version": "3.0.0rc",
+  "version": "3.0.0",
   "description": "修正Bilibili 账户已注销的主页链接，修改为 `https://www.bilibili.com/list/$UID`.",
   "main": "src/main.ts",
   "scripts": {
@@ -15,11 +15,11 @@
     "query-selector-shadow-dom": "^1.0.1"
   },
   "devDependencies": {
-    "@types/node": "^25.6.0",
+    "@types/node": "^25.6.2",
     "@types/query-selector-shadow-dom": "^1.0.4",
-    "terser": "^5.46.2",
+    "terser": "^5.47.1",
     "typescript": "^6.0.3",
-    "vite": "^7.3.2",
-    "vite-plugin-monkey": "^7.1.9"
+    "vite": "^8.0.11",
+    "vite-plugin-monkey": "^8.0.2"
   }
 }

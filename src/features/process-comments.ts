@@ -7,8 +7,7 @@ const TARGET_MENTION = `@${DEAD_USERNAME}`;
 
 export function processComments(
     startElements: NodeListOf<BiliCommentsElement> = document.querySelectorAll("bili-comments"),
-): number {
-    let hitCount = 0;
+): void {
     for (const startElement of startElements) {
         const threads = querySelectorAllDeep(
             "bili-comment-thread-renderer:not([data-bilifix-processed])",
@@ -32,7 +31,6 @@ export function processComments(
                 const nodeName = node.nodeName; // 大写 'A' 或 'BILI-COMMENT-REPLIES-RENDERER'
 
                 if (nodeName === 'A') {
-                    hitCount++;
                     // 5. getAttribute 较慢，改用 dataset (DOMStringMap) 直读
                     if (node.dataset.type === 'mention') {
                         const text = node.textContent;
@@ -55,5 +53,4 @@ export function processComments(
             }
         }
     }
-    return hitCount;
 }
