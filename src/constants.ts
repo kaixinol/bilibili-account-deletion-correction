@@ -1,4 +1,4 @@
-import { handleInterceptElement, handleOverrideProcessElement } from "./features/handle-element";
+import { handleInterceptElement, handleOverrideProcessElement, handleSearchElement } from "./features/handle-element";
 import type { RuleConfig } from "./types";
 import { getFirstSegmentMatchText } from "./utils/text";
 import { getHrefUidFromParent, getOpusStateUid } from "./utils/uid";
@@ -22,6 +22,7 @@ export const LINK_RULES: Record<string, RuleConfig> = {
         requirePolling: true,
     },
     "search.bilibili.com": {
+        handleFunc: handleSearchElement,
         query: ".bili-video-card__info--author",
         textGetter: getFirstSegmentMatchText,
         uidGetter: getHrefUidFromParent,

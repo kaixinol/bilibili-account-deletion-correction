@@ -64,6 +64,7 @@ function annotateElement(
     tag: HTMLAnchorElement,
     matchText = getLegacyText(tag).trim(),
     uidGetter: RuleUidGetter = getHrefUid,
+    modifyHref = true,
 ): void {
     const uid = uidGetter(tag);
     if (!uid) return;
@@ -71,16 +72,19 @@ function annotateElement(
     appendShortId(tag, matchText, uidToShortId(uid));
     applyOverflowFallback(tag);
     attachRegisterTime(tag, estimateRegisterTime(uid));
-    processNormalElement(tag, uid);
+    if (modifyHref) {
+        processNormalElement(tag, uid);
+    }
 }
 
 function annotateElementsWithMatchText(
     elements: Iterable<HTMLAnchorElement>,
     matchText: string,
     uidGetter: RuleUidGetter = getHrefUid,
+    modifyHref = true,
 ): void {
     for (const tag of elements) {
-        annotateElement(tag, matchText, uidGetter);
+        annotateElement(tag, matchText, uidGetter, modifyHref);
     }
 }
 
@@ -157,6 +161,28 @@ export const handleOverrideProcessElement: ElementHandleFunc = (
     tag.style.fontStyle = "italic";
 
     handleOverrideElement(tag, str, uidGetter);
+};
+
+export const handleSearchElement: ElementHandleFunc = (
+    tag,
+    textGetter = getDefaultMatchText,
+    uidGetter = getHrefUid,
+) => {
+    const text = textGetter(tag);
+    const str = text.trim();
+    if (!isDeadUsername(str)) return;
+
+    tag.style.fontStyle = "italic";
+
+    const uid = uidGetter(tag);
+    if (!uid) return;
+
+    const anchor = tag.closest("a") as HTMLAnchorElement | null;
+    if (anchor) {
+        anchor.href = `https://www.bilibili.com/list/${uid}`;
+    }
+
+    annotateElementsWithMatchText([tag], str, uidGetter, false);
 };
 
 export function handleElement(
