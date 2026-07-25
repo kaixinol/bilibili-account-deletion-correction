@@ -1,7 +1,7 @@
 import { handleInterceptElement, handleOverrideProcessElement } from "./features/handle-element";
 import type { RuleConfig } from "./types";
 import { getFirstSegmentMatchText } from "./utils/text";
-import { getOpusStateUid } from "./utils/uid";
+import { getHrefUidFromParent, getOpusStateUid } from "./utils/uid";
 
 export const LINK_RULES: Record<string, RuleConfig> = {
     "space.bilibili.com/\\d+/favlist": {
@@ -22,8 +22,9 @@ export const LINK_RULES: Record<string, RuleConfig> = {
         requirePolling: true,
     },
     "search.bilibili.com": {
-        query: ".bili-video-card__info--owner",
+        query: ".bili-video-card__info--author",
         textGetter: getFirstSegmentMatchText,
+        uidGetter: getHrefUidFromParent,
     },
     "www.bilibili.com/opus/\\d+": {
         handleFunc: handleOverrideProcessElement,

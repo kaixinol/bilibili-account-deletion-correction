@@ -40,6 +40,13 @@ export const getHrefUid: RuleUidGetter = (tag: HTMLAnchorElement) => {
     return uidMatch?.[1];
 };
 
+export const getHrefUidFromParent: RuleUidGetter = (tag: HTMLAnchorElement) => {
+    const parent = tag.closest("a") as HTMLAnchorElement | null;
+    if (!parent) return undefined;
+    const uidMatch = parent.href?.match(/\/(\d+)\??/) ?? null;
+    return uidMatch?.[1];
+};
+
 export const getOpusStateUid: RuleUidGetter = () => {
     const state = window.__INITIAL_STATE__?.detail;
 
