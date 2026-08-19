@@ -14,11 +14,17 @@
 - ⏰ **推测注册时间**：根据 UID 估算并显示账户注册时间
 - 🔄 **动态监听**：自动处理页面滚动、鼠标移动时加载的新评论和内容
 
+### 可选功能
+
+在油猴菜单点击可启用可选功能`检测无投稿用户`
+（注：会发送API，可能导致[429](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Reference/Status/429)）
+
 ## 核心 API：annotateElements
 
 本脚本暴露了一个API `annotateElements`,允许开发者在其他脚本或应用中复用账户标注功能。
 
 **使用方式：**
+
 ```typescript
 window.dispatchEvent(
     new CustomEvent("biliFix:request-api", {
@@ -29,17 +35,18 @@ window.dispatchEvent(
 );
 ```
 
-
 ## 安装方法
 
 ### 通过 Tampermonkey/Greasemonkey
 
 1. 安装浏览器扩展（Tampermonkey 或 Greasemonkey）
 2. 构建脚本：
+
    ```bash
    pnpm install
    pnpm build
    ```
+
 3. 将生成的 `.user.js` 文件拖拽到浏览器扩展管理器中安装
 
 ### 开发模式
