@@ -30,7 +30,7 @@ export default defineConfig({
                 description: "修正Bilibili 账户已注销的主页链接，修改为 https://www.bilibili.com/list/$UID",
                 author: "Kaesinol",
                 match: ["https://*.bilibili.com/*"],
-                grant: "none",
+                grant: ["GM_registerMenuCommand", "GM_getValue", "GM_setValue"],
                 "run-at": "document-end",
                 icon: "https://www.gstatic.com/android/keyboard/emojikitchen/20220506/u1f47b/u1f47b_u1f5d1-ufe0f.png",
             },

@@ -1,3 +1,4 @@
+import "./settings";
 import { annotateElements } from "./features/handle-element";
 import { processComments } from "./features/process-comments";
 import { processLinks } from "./features/process-links";

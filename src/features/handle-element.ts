@@ -16,6 +16,11 @@ import {
     getHrefUid,
     uidToShortId,
 } from "../utils/uid";
+import {
+    isCheck404Enabled,
+    getCached404,
+    setCached404,
+} from "../settings";
 
 function appendShortId(
     tag: HTMLAnchorElement,
@@ -54,6 +59,35 @@ function attachRegisterTime(tag: HTMLAnchorElement, time: string): void {
             : `注册时间推测: ${time}`;
 }
 
+async function checkNoVideos(uid: UidValue, tag: HTMLElement): Promise<void> {
+    const uidStr = String(uid);
+
+    const cached = getCached404(uidStr);
+    if (cached === true) {
+        tag.title = tag.title ? `${tag.title}\n该用户没有任何视频投稿` : "该用户没有任何视频投稿";
+        return;
+    }
+    if (cached === false) return;
+
+    try {
+        const resp = await fetch(
+            `https://api.bilibili.com/x/v2/medialist/resource/list?out_referer=&mobi_app=web&type=1&biz_id=${uidStr}`,
+            { credentials: "include" },
+        );
+        if (!resp.ok) return;
+        const data = await resp.json();
+        const hasVideo = !!(data?.data?.media_list?.length);
+        if (!hasVideo) {
+            setCached404(uidStr, true);
+            tag.title = tag.title ? `${tag.title}\n该用户没有任何视频投稿` : "该用户没有任何视频投稿";
+        } else {
+            setCached404(uidStr, false);
+        }
+    } catch {
+        // network error — silently ignore
+    }
+}
+
 export function annotateElements(elements: Iterable<HTMLAnchorElement>): void {
     for (const tag of elements) {
         annotateElement(tag);
@@ -74,6 +108,9 @@ function annotateElement(
     attachRegisterTime(tag, estimateRegisterTime(uid));
     if (modifyHref) {
         processNormalElement(tag, uid);
+    }
+    if (isCheck404Enabled()) {
+        checkNoVideos(uid, tag);
     }
 }
 
@@ -119,6 +156,10 @@ function handleOverrideElement(
     }
 
     tag.setAttribute("data-bilifix-processed", "true");
+
+    if (isCheck404Enabled()) {
+        checkNoVideos(uid, tag);
+    }
 }
 
 function processNormalElement(tag: HTMLAnchorElement, uid: UidValue): void {
