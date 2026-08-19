@@ -17,7 +17,7 @@
 ### 可选功能
 
 在油猴菜单点击可启用可选功能`检测无投稿用户`
-（注：会发送API，可能导致[429](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Reference/Status/429)）
+（注：会fetch API，可能导致[429](https://developer.mozilla.org/zh-TW/docs/Web/HTTP/Reference/Status/429)）
 
 ## 核心 API：annotateElements
 
