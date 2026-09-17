@@ -36,9 +36,9 @@ export default defineConfig({
             },
             build: {
                 externalGlobals: {
-                    "query-selector-shadow-dom": cdn.jsdelivr(
+                    "query-selector-shadow-dom-modern": cdn.jsdelivr(
                         "querySelectorShadowDom",
-                        "dist/querySelectorShadowDom.js",
+                        "dist/umd/index.min.js",
                     ),
                 },
             },

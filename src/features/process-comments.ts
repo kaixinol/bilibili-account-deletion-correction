@@ -1,4 +1,4 @@
-import { querySelectorAllDeep } from "query-selector-shadow-dom";
+import { querySelectorAllDeep } from "query-selector-shadow-dom-modern";
 import { DEAD_USERNAME } from "../shared/dead-username";
 import { handleElement } from "./handle-element";
 

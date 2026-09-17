@@ -11,15 +11,14 @@
   "author": "Kaesinol",
   "license": "MIT",
   "packageManager": "pnpm@11.17.0",
-  "dependencies": {
-    "query-selector-shadow-dom": "^1.0.1"
-  },
   "devDependencies": {
     "@types/node": "^26.1.1",
-    "@types/query-selector-shadow-dom": "^1.0.4",
     "terser": "^5.49.0",
     "typescript": "^7.0.2",
     "vite": "^8.1.5",
     "vite-plugin-monkey": "^8.1.0"
+  },
+  "dependencies": {
+    "query-selector-shadow-dom-modern": "^1.1.0"
   }
 }

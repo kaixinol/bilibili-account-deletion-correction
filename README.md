@@ -61,7 +61,7 @@ pnpm dev
 - **TypeScript** - 类型安全的 JavaScript 超集
 - **Vite** - 现代化的前端构建工具
 - **vite-plugin-monkey** - Vite 的用户脚本插件
-- **query-selector-shadow-dom** - 支持 Shadow DOM 的选择器库
+- **query-selector-shadow-dom-modern** - 支持 Shadow DOM 的选择器库
 
 ## 许可证
 

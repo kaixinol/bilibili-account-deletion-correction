@@ -8,16 +8,13 @@ importers:
 
   .:
     dependencies:
-      query-selector-shadow-dom:
-        specifier: ^1.0.1
-        version: 1.0.1
+      query-selector-shadow-dom-modern:
+        specifier: ^1.1.0
+        version: 1.1.0
     devDependencies:
       '@types/node':
         specifier: ^26.1.1
         version: 26.1.1
-      '@types/query-selector-shadow-dom':
-        specifier: ^1.0.4
-        version: 1.0.4
       terser:
         specifier: ^5.49.0
         version: 5.49.0
@@ -311,9 +308,6 @@ packages:
 
   '@types/node@26.1.1':
     resolution: {integrity: sha512-nxAkRSVkN1Y0JC1W8ky/fTfkGsMmcrRsbx+3XoZE+rMOX71kLYTV7fLXpqud1GpbpP5TuffXFqfX7fH2GgZREw==}
-
-  '@types/query-selector-shadow-dom@1.0.4':
-    resolution: {integrity: sha512-8jfGPD0wCMCdyBvrvOrWVn8bHL1UEjkPVJKsqNZpEXp+a7mIIvvGpJMd6n6dlNl7IkG2ryxIVqFI516RPE0uhQ==}
 
   '@typescript/typescript-aix-ppc64@7.0.2':
     resolution: {integrity: sha512-MTKKkWB7p/0E9xi1d1tHtZ5PiLkGEMIq88pK2CubZjOsLtYTLqhgIgi6zepFa+9GHZ6h05NMCkQxGKiPXMxXtQ==}
@@ -675,8 +669,8 @@ packages:
     resolution: {integrity: sha512-dM0jVuXJPsDN6DvRpea484tCUaMiXWjuCn++HGTqUWzGDjv5tZkEZldAJ/UMlqRYGFrD/etByo4/xOuC/snX2A==}
     engines: {node: '>=20'}
 
-  query-selector-shadow-dom@1.0.1:
-    resolution: {integrity: sha512-lT5yCqEBgfoMYpf3F2xQRK7zEr1rhIIZuceDK6+xRkJQ4NMbHTwXqk4NkwDwQMNqXgG9r9fyHnzwNVs6zV5KRw==}
+  query-selector-shadow-dom-modern@1.1.0:
+    resolution: {integrity: sha512-yhHMWlJ/OcqAgESRc0RDamFltuzIsWhf89ZWPTLE6PjQbfwG+1E5JfYRNlmP9lKSsMqQPpijUuzI2UsiSS3H1g==}
 
   rolldown@1.1.5:
     resolution: {integrity: sha512-t9z29cJjXf/vxQ8dyhCSpt6H6aSwHTk8cT5I3iy6SMXuFpk5mB6PL6XfC8PCwrPTx93udwKUm9HRteAlTGBLiA==}
@@ -984,8 +978,6 @@ snapshots:
     dependencies:
       undici-types: 8.3.0
 
-  '@types/query-selector-shadow-dom@1.0.4': {}
-
   '@typescript/typescript-aix-ppc64@7.0.2':
     optional: true
 
@@ -1236,7 +1228,7 @@ snapshots:
 
   powershell-utils@0.1.0: {}
 
-  query-selector-shadow-dom@1.0.1: {}
+  query-selector-shadow-dom-modern@1.1.0: {}
 
   rolldown@1.1.5:
     dependencies:
