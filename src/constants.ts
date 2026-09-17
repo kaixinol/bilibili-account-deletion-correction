@@ -7,24 +7,26 @@ const VIDEO_CARD = {
     query: ".bili-video-card__info--author",
     textGetter: getFirstSegmentMatchText,
     uidGetter: getHrefUidFromParent,
+    requirePolling: true,
 }
 export const LINK_RULES: Record<string, RuleConfig> = {
     "space.bilibili.com/\\d+/favlist": {
         query: "div.bili-video-card__subtitle a",
         textGetter: getFirstSegmentMatchText,
+        requirePolling: true,
     },
     "space.bilibili.com/\\d+/relation/*": {
         query: "a.relation-card-info__uname",
         textGetter: getFirstSegmentMatchText,
+        requirePolling: true,
     },
     "www.bilibili.com/(video|list)/": {
         handleFunc: handleInterceptElement,
         query: [
-            ".up-detail-top a",
-            "a.staff-name",
-            "div.basic-desc-info a.mention-user",
+            ".up-detail-top a",// UP名字
+            "a.staff-name", // 多人投稿
+            "div.basic-desc-info a.mention-user", // 简介AT
         ],
-        requirePolling: true,
     },
     "search.bilibili.com": VIDEO_CARD,
     "www.bilibili.com/opus/\\d+": {
@@ -35,6 +37,6 @@ export const LINK_RULES: Record<string, RuleConfig> = {
     },
     "www.bilibili.com/history": {
         ...VIDEO_CARD,
-        query: "bili-video-card__author",
-    }
+        query: ".bili-video-card__author span",
+    },
 };
