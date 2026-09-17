@@ -2,7 +2,12 @@ import { handleInterceptElement, handleOverrideProcessElement, handleSearchEleme
 import type { RuleConfig } from "./types";
 import { getFirstSegmentMatchText } from "./utils/text";
 import { getHrefUidFromParent, getOpusStateUid } from "./utils/uid";
-
+const VIDEO_CARD = {
+    handleFunc: handleSearchElement,
+    query: ".bili-video-card__info--author",
+    textGetter: getFirstSegmentMatchText,
+    uidGetter: getHrefUidFromParent,
+}
 export const LINK_RULES: Record<string, RuleConfig> = {
     "space.bilibili.com/\\d+/favlist": {
         query: "div.bili-video-card__subtitle a",
@@ -21,16 +26,15 @@ export const LINK_RULES: Record<string, RuleConfig> = {
         ],
         requirePolling: true,
     },
-    "search.bilibili.com": {
-        handleFunc: handleSearchElement,
-        query: ".bili-video-card__info--author",
-        textGetter: getFirstSegmentMatchText,
-        uidGetter: getHrefUidFromParent,
-    },
+    "search.bilibili.com": VIDEO_CARD,
     "www.bilibili.com/opus/\\d+": {
         handleFunc: handleOverrideProcessElement,
         query: ".opus-module-author:not([data-bilifix-processed])",
         textGetter: getFirstSegmentMatchText,
         uidGetter: getOpusStateUid,
     },
+    "www.bilibili.com/history": {
+        ...VIDEO_CARD,
+        query: "bili-video-card__author",
+    }
 };
