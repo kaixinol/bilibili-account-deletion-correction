@@ -155,6 +155,8 @@ function handleOverrideElement(
         nameEl.textContent = newText;
     }
 
+    attachRegisterTime(tag, estimateRegisterTime(uid));
+
     tag.setAttribute("data-bilifix-processed", "true");
 
     if (isCheck404Enabled()) {
